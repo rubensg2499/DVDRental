@@ -9,29 +9,32 @@ function get_conection(){
   }
   return false;
 }
-
+function get_columns($columns){
+  $param = "";
+  foreach ($columns as $column) {
+    $param .= $column . ", ";
+  }
+  return substr($param, 0, -2);
+}
 //Funcion para seleccionar datos de ciertas columnas de la base de datos
 function select_from(
   $conection, //Conexion con la base de datos.
   $table,  //Nombre de la tabla.
-  $params=false, //columnas a buscar, por defecto son todas.
+  $columns=false, //columnas a buscar, por defecto son todas.
   $condition=false //Condición para buscar, por defecto no hay Condición.
 ){
-  $columns = "";
-  if($params){
-    foreach ($params as $param) {
-      $columns .= $param . ", ";
-    }
-    $columns = substr($columns, 0, -2);
+  $cols = "";
+  if($columns){
+    $cols = get_columns($columns);
   }
   if($conection){
     try {
-      if($params){
+      if($columns){
         if($condition){
-          $query = pg_query($conection, "SELECT $columns FROM $table WHERE $condition");
+          $query = pg_query($conection, "SELECT $cols FROM $table WHERE $condition");
           return pg_fetch_all($query);
         }
-        $query = pg_query($conection, "SELECT $columns FROM $table");
+        $query = pg_query($conection, "SELECT $cols FROM $table");
         return pg_fetch_all($query);
       }
       if($condition){
