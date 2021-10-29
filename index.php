@@ -3,27 +3,24 @@
 require_once("conexion.php");
 require_once("constantes.php");
 $conection = get_conection();
+if($conection['success']){
+  //Haga el código.
+  echo $conection['message'];
+}else {
+  echo $conection['message'];
+}
+//$actores = select_from($conection,"actor", $columns=false, "actor_id < 32");
+/*if ($actores['success']) {
+  print_r($actores['result']);
+}else {
+  print_r($actores['message']);
+}*/
+$datos = array('first_name' => 'Rubén', 'last_name' => 'Sánchez');
+$response = insert($conection, "actor", $datos);
+if($response['success']){
+  echo $response['message'];
+}else {
+  echo $response['message'];
+}
 
-//$actores = select_all_from($conection,"actor");
-//print_r($actores);
-
-$apellidos = select_from(
-  $conection, "actor",
-  $columns = false,
-  $condition = "actor_id = 32"
-);
-
-print_r($apellidos);
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página principal</title>
-</head>
-<body>
-
-</body>
-</html>
