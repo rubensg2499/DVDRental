@@ -9,14 +9,14 @@ if($conection['success']){
 }else {
   echo $conection['message'];
 }
-//$actores = select_from($conection,"actor", $columns=false, "actor_id < 32");
-/*if ($actores['success']) {
+/*$actores = select_from($conection,"actor", $columns=false, $condition=false);
+if ($actores['success']) {
   print_r($actores['result']);
 }else {
   print_r($actores['message']);
 }*/
-$datos = array('first_name' => 'Rubén', 'last_name' => 'Sánchez');
-$response = insert($conection, "actor", $datos);
+$datos = array('first_name' => 'Antonio', 'last_name' => "Banderas");
+$response = delete($conection, "actor", "actor_id = 202");
 if($response['success']){
   echo $response['message'];
 }else {

@@ -1,14 +1,18 @@
 <?php
 //Funcion para conectarse a la base de datos
 function get_conection(){
-  $message = "";
+  $response = array('success' => false, 'message' => 'Error conexion: ', 'result' => NULL);
   try {
     $conection = pg_connect("host=localhost dbname=DVDRental user=postgres password=postgres");
-    return array('success' => true, 'message' => 'Conexión a la base de datos exitosa.', 'result' => $conection);
+    if($conection){
+      $response['success'] = true;
+      $response['message'] = 'Conexión a la base de datos exitosa.';
+      $response['result'] = $conection;
+    }
   } catch (\Exception $e) {
-    $message = "Error en la conexión a la base de datos: " . $e.getMessage();
+    $response['message'] .= $e.getMessage();
   }
-  return array('success' => false, 'message' => $message);
+  return $response;
 }
 
 //Función para obtener la columnas de un arreglo.
@@ -63,7 +67,7 @@ function insert(
   $table,
   $columns_values
 ){
-  $message = "";
+  $message = "Error al insertar el registro.";
   $cols = "";
   $vals = "";
   foreach ($columns_values as $column => $value) {
@@ -79,6 +83,31 @@ function insert(
       return array('success' => true, 'message' => $message);
     } catch (\Exception $e) {
       $message = "Error al insertar el registro: " . $e.getMessage;
+    }
+    return array('success' => false, 'message' => $message);
+  }
+  return $conection;
+}
+
+//Funcion para eliminar datos de la base de datos.
+function delete(
+  $conection,
+  $table,
+  $condition=false
+){
+  $message = "Error al eliminar el registro.";
+  if($conection['success']){
+    try {
+      if($condition){
+        $query = pg_query($conection['result'], "DELETE FROM $table WHERE $condition");
+        $message = "Registro eliminado correctamente.";
+        return array('success' => true, 'message' => $message);
+      }
+      $query = pg_query($conection['result'], "DELETE FROM $table");
+      $message = "Registro eliminado correctamente.";
+      return array('success' => true, 'message' => $message);
+    } catch (\Exception $e) {
+        $message = "Error al eliminar el registro: " . $e.getMessage;
     }
     return array('success' => false, 'message' => $message);
   }
