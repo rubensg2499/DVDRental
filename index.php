@@ -4,10 +4,15 @@ require_once("conexion.php");
 require_once("constantes.php");
 $conection = get_conection();
 
-$actores = select_all_from($conection,"actor");
+//$actores = select_all_from($conection,"actor");
 //print_r($actores);
 
-$apellidos = select_from($conection, $ACTOR, "actor");
+$apellidos = select_from(
+  $conection, "actor",
+  $columns = false,
+  $condition = "actor_id = 32"
+);
+
 print_r($apellidos);
 ?>
 <!DOCTYPE html>
