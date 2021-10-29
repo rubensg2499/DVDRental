@@ -113,4 +113,36 @@ function delete(
   }
   return $conection;
 }
+
+function update(
+  $conection,
+  $table,
+  $columns_values,
+  $condition = false
+){
+  $message = "Error al actualizar el registro.";
+  $cols_vals = "";
+  foreach ($columns_values as $column => $value) {
+    $cols_vals .= $column . " = ";
+    $cols_vals .= (gettype($value)=='string' || gettype($value)=='boolean')? "'" . $value . "', " : $value . ", ";
+  }
+  $cols_vals = substr($cols_vals,0,-2);
+
+  if($conection['success']){
+    try {
+      if ($condition) {
+        $query = pg_query($conection['result'], "UPDATE $table SET $cols_vals WHERE $condition");
+        $message = "Registro actualizado correctamente.";
+        return array('success' => true, 'message' => $message);
+      }
+      $query = pg_query($conection['result'], "UPDATE $table SET $cols_vals");
+      $message = "Registro actualizado correctamente.";
+      return array('success' => true, 'message' => $message);
+    } catch (\Exception $e) {
+      $message = "Error al actualizar el registro: " . $e.getMessage;
+    }
+    return array('success' => false, 'message' => $message);
+  }
+  return $conection;
+}
 ?>

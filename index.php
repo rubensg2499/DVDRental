@@ -13,10 +13,10 @@ if($conection['success']){
 if ($actores['success']) {
   print_r($actores['result']);
 }else {
-  print_r($actores['message']);
+  print_r($actores['message']); Thora Temple
 }*/
-$datos = array('first_name' => 'Antonio', 'last_name' => "Banderas");
-$response = delete($conection, "actor", "actor_id = 202");
+$datos = array('first_name' => 'Thora', 'last_name' => 'Temple');
+$response = update($conection, "actor", $datos, "actor_id = 200");
 if($response['success']){
   echo $response['message'];
 }else {
