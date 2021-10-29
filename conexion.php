@@ -11,10 +11,23 @@ function get_conection(){
 }
 
 //Funcion para seleccionar datos de la base de datos
-function select(){
-
+function select_from($conection, $params, $table){
+  $columns = "";
+  foreach ($params as $param) {
+    $columns .= $param . ", ";
+  }
+  $columns = substr($columns, 0, -2);
+  if($conection){
+    try {
+      $query = pg_query($conection, "SELECT $columns FROM $table");
+      return pg_fetch_all($query);
+    } catch (\Exception $e) {
+      echo "Error al obtener datos: " . $e.getMessage;
+    }
+    return false;
+  }
 }
-function select_all($conection, $table){
+function select_all_from($conection, $table){
   if($conection){
     try {
       $query = pg_query($conection, "SELECT * FROM $table");
@@ -24,6 +37,5 @@ function select_all($conection, $table){
     }
     return false;
   }
-
 }
 ?>

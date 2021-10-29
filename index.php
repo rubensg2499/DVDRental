@@ -1,11 +1,14 @@
 
 <?php
 require_once("conexion.php");
+require_once("constantes.php");
 $conection = get_conection();
 
-$actores = select_all($conection,"actor");
-print_r($actores);
+$actores = select_all_from($conection,"actor");
+//print_r($actores);
 
+$apellidos = select_from($conection, $ACTOR, "actor");
+print_r($apellidos);
 ?>
 <!DOCTYPE html>
 <html lang="es">
