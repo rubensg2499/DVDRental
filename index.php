@@ -1,28 +1,59 @@
 
 <?php
-echo "Hola mundo";
-//Ejemplo de conexión de php con postgres
-$conexion = pg_connect("host=localhost dbname=dvdrental user=postgres password=postgres");
-$consulta  = pg_query($conexion, "SELECT * FROM actor");
-if($conexion){
-    echo "Correcto\n";
-    $arr = pg_fetch_all($consulta);
-    print_r($arr);
-    
-}else{
-    echo "Error";
+require_once("conexion.php");
+require_once("constantes.php");
+$conection = @get_conection();
+
+if($conection['success']){
+  //Haga el código.
+  echo $conection['message'];
+}else {
+  echo $conection['message'];
 }
-echo "hola mundo 2";
+/*
+$actores = @select_from(
+  $conection, "actor",
+  $columns = false, //array('actor_id', 'first_name'),
+  $condition = false//"actor_id < 4"
+);
+
+if ($actores['success']) {
+  echo $actores['message'];
+  print_r($actores['result']);
+}else {
+  print_r($actores['message']);
+}*/
+
+/*
+$datos = array('address' => 'Dirección', 'district' => 'Distrito', 'postal_code' => '70710', 'city_id'=>38, 'phone'=>'9163415385');
+$response = @insert($conection, "address", $datos);
+//$response = update($conection, "actor", $datos, "actor_id = 200");
+if($response['success']){
+  print_r($response['result']);
+  echo $response['message'];
+}else {
+  echo $response['message'];
+}
+*/
+/*
+$response = @delete($conection, "actor", "actor_id IN (206, 207)");
+if($response['success']){
+  print_r($response['result']);
+  echo $response['message'];
+}else {
+  echo $response['message'];
+}*/
+
+/*
+$response = @update(
+  $conection, "actor",
+  array('first_name' => 'Ernesto', 'last_name' => 'Alonso'),
+  "actor_id = 201"
+);
+if($response['success']){
+  print_r($response['result']);
+  echo $response['message'];
+}else {
+  echo $response['message'];
+}*/
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página principal</title>
-</head>
-<body>
-    
-</body>
-</html>
