@@ -18,14 +18,7 @@ function get_conection(){
   return $response;
 }
 
-//Función para obtener la columnas de un arreglo.
-function get_columns($columns){
-  $param = "";
-  foreach ($columns as $column) {
-    $param .= $column . ", ";
-  }
-  return substr($param, 0, -2);
-}
+//Función que ejecuta las sentencias SQL
 function get_response($conection, $query, $type){
   $response = array('success' => false, 'message' => 'ERROR-CONNECTION', 'result' => NULL);
   $message = array(
@@ -36,11 +29,20 @@ function get_response($conection, $query, $type){
   );
   $q = pg_query($conection, $query);
   if($q){
-    $response = array('success' => true, 'message' => $message[$type], 'result' => pg_fetch_all($q));
+    $response = array('success' => true, 'message' => $message[$type], 'result' => ($type == "SELECT") ? pg_fetch_all($q) : true);
     return $response;
   }
   $response['message'] = $type . pg_last_error($conection['result']);
   return $response;
+}
+
+//Función para obtener la columnas de un arreglo.
+function get_columns($columns){
+  $param = "";
+  foreach ($columns as $column) {
+    $param .= $column . ", ";
+  }
+  return substr($param, 0, -2);
 }
 //Funcion para obtener datos la base de datos.
 function select_from(
@@ -49,23 +51,20 @@ function select_from(
   $columns=false, //columnas a buscar, por defecto son todas.
   $condition=false //Condición para buscar, por defecto no hay Condición.
 ){
-  $response = array('success' => false, 'message' => 'ERROR-CONNECTION', 'result' => NULL);
-  $cols = "";
-
   if($conection['success']){
       if($columns){
-          $cols = get_columns($columns);
-          if($condition) //Cuando hay columnas y condición.
-            return get_response($conection['result'], "SELECT $cols FROM $table WHERE $condition", "SELECT");
-          //Cuando solo hay columnas.
-          return get_response($conection['result'], "SELECT $cols FROM $table", "SELECT");
+        $columns = get_columns($columns);
+        if($condition) //Cuando hay columnas y condición.
+          return get_response($conection['result'], "SELECT $cols FROM $table WHERE $condition", "SELECT");
+        //Cuando solo hay columnas.
+        return get_response($conection['result'], "SELECT $cols FROM $table", "SELECT");
       }
       if($condition) //Hay condición, pero no columnas
         return get_response($conection['result'], "SELECT * FROM $table WHERE $condition", "SELECT");
       //No hay condición ni columnas
       return get_response($conection['result'], "SELECT * FROM $table", "SELECT");
   }
-  return $response;
+  return $conection;
 }
 
 //Funcion para insertar datos en la base de datos.
@@ -74,7 +73,6 @@ function insert(
   $table,
   $columns_values
 ){
-  $message = "Error al insertar el registro.";
   $cols = "";
   $vals = "";
   foreach ($columns_values as $column => $value) {
@@ -83,16 +81,8 @@ function insert(
   }
   $cols = substr($cols,0,-2);
   $vals = substr($vals,0,-2);
-  if($conection['success']){
-    try {
-      $query = pg_query($conection['result'], "INSERT INTO $table ($cols) VALUES ($vals)");
-      $message = "Se insertó el registro correctamente.";
-      return array('success' => true, 'message' => $message);
-    } catch (\Exception $e) {
-      $message = "Error al insertar el registro: " . $e.getMessage;
-    }
-    return array('success' => false, 'message' => $message);
-  }
+  if($conection['success']) //Insertar un registro
+    return get_response($conection['result'], "INSERT INTO $table ($cols) VALUES ($vals)", "INSERT");
   return $conection;
 }
 

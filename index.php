@@ -17,18 +17,20 @@ $actores = @select_from(
   $condition = false//"actor_id < 4"
 );
 
-if ($actores['success']) {
+/*if ($actores['success']) {
   echo $actores['message'];
   print_r($actores['result']);
 }else {
   print_r($actores['message']);
-}
-/*$datos = array('first_name' => 'Thora', 'last_name' => 'Temple');
-$response = update($conection, "actor", $datos, "actor_id = 200");
+}*/
+$datos = array('first_name' => 'María', 'last_name' => 'Jiménez');
+$response = @insert($conection, "actor", $datos);
+//$response = update($conection, "actor", $datos, "actor_id = 200");
 if($response['success']){
+  print_r($response['result']);
   echo $response['message'];
 }else {
   echo $response['message'];
-}*/
+}
 
 ?>
