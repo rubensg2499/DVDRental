@@ -1,16 +1,19 @@
 <?php
 //Funcion para conectarse a la base de datos
 function get_conection(){
-  $response = array('success' => false, 'message' => 'Error conexion: ', 'result' => NULL);
-  try {
-    $conection = pg_connect("host=localhost dbname=DVDRental user=postgres password=postgres");
-    if($conection){
-      $response['success'] = true;
-      $response['message'] = 'Conexión a la base de datos exitosa.';
-      $response['result'] = $conection;
-    }
-  } catch (\Exception $e) {
-    $response['message'] .= $e.getMessage();
+  $host = "localhost";
+  $dbname = "DVDRental";
+  $user = "postgres";
+  $password = "postgres";
+  $response = array('success' => false, 'message' => 'ERROR-CONNECTION', 'result' => NULL);
+  $conection = pg_connect("host=$host dbname=$dbname user=$user password=$password");
+
+  if($conection){
+    $response['success'] = true;
+    $response['message'] = 'Conexión a la base de datos exitosa.';
+    $response['result'] = $conection;
+  }else {
+    $response['message'];
   }
   return $response;
 }
@@ -23,7 +26,22 @@ function get_columns($columns){
   }
   return substr($param, 0, -2);
 }
-
+function get_response($conection, $query, $type){
+  $response = array('success' => false, 'message' => 'ERROR-CONNECTION', 'result' => NULL);
+  $message = array(
+    'SELECT' => "Registro obtenido de manera exitosa.",
+    'INSERT' => "Registro guardado de manera exitosa.",
+    'UPDATE' => "Registro actualizado de manera exitosa.",
+    'DELETE' => "Registro eliminado de manera exitosa.",
+  );
+  $q = pg_query($conection, $query);
+  if($q){
+    $response = array('success' => true, 'message' => $message[$type], 'result' => pg_fetch_all($q));
+    return $response;
+  }
+  $response['message'] = $type . pg_last_error($conection['result']);
+  return $response;
+}
 //Funcion para obtener datos la base de datos.
 function select_from(
   $conection, //Conexion con la base de datos.
@@ -31,34 +49,23 @@ function select_from(
   $columns=false, //columnas a buscar, por defecto son todas.
   $condition=false //Condición para buscar, por defecto no hay Condición.
 ){
-  $message = "Registros obtenidos de manera exitosa.";
+  $response = array('success' => false, 'message' => 'ERROR-CONNECTION', 'result' => NULL);
   $cols = "";
-  if($columns){
-    $cols = get_columns($columns);
-  }
-  if($conection['success']){
-    try {
-      if($columns){
-        if($condition){
-          $query = pg_query($conection['result'], "SELECT $cols FROM $table WHERE $condition");
-          return array('success' => true, 'result' => pg_fetch_all($query));
-        }
-        $query = pg_query($conection['result'], "SELECT $cols FROM $table");
-        return array('success' => true, 'result' => pg_fetch_all($query));
-      }
-      if($condition){
-        $query = pg_query($conection['result'], "SELECT * FROM $table WHERE $condition");
-        return array('success' => true, 'result' => pg_fetch_all($query));
-      }
-      $query = pg_query($conection['result'], "SELECT * FROM $table");
-      return array('success' => true, 'result' => pg_fetch_all($query));
 
-    } catch (\Exception $e) {
-      $message = "Error al obtener datos: " . $e.getMessage();
-    }
-    return array('success' => false, 'message' => $message);
+  if($conection['success']){
+      if($columns){
+          $cols = get_columns($columns);
+          if($condition) //Cuando hay columnas y condición.
+            return get_response($conection['result'], "SELECT $cols FROM $table WHERE $condition", "SELECT");
+          //Cuando solo hay columnas.
+          return get_response($conection['result'], "SELECT $cols FROM $table", "SELECT");
+      }
+      if($condition) //Hay condición, pero no columnas
+        return get_response($conection['result'], "SELECT * FROM $table WHERE $condition", "SELECT");
+      //No hay condición ni columnas
+      return get_response($conection['result'], "SELECT * FROM $table", "SELECT");
   }
-  return $conection;
+  return $response;
 }
 
 //Funcion para insertar datos en la base de datos.
