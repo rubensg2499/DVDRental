@@ -24,15 +24,15 @@ function get_response($conection, $query, $type){
   $message = array(
     'SELECT' => "Registro obtenido de manera exitosa.",
     'INSERT' => "Registro guardado de manera exitosa.",
-    'UPDATE' => "Registro actualizado de manera exitosa.",
     'DELETE' => "Registro eliminado de manera exitosa.",
+    'UPDATE' => "Registro actualizado de manera exitosa."
   );
   $q = pg_query($conection, $query);
   if($q){
     $response = array('success' => true, 'message' => $message[$type], 'result' => ($type == "SELECT") ? pg_fetch_all($q) : true);
     return $response;
   }
-  $response['message'] = $type . pg_last_error($conection['result']);
+  $response['message'] = $type .'_'. pg_last_error($conection['result']);
   return $response;
 }
 
@@ -94,19 +94,10 @@ function delete(
 ){
   $message = "Error al eliminar el registro.";
   if($conection['success']){
-    try {
-      if($condition){
-        $query = pg_query($conection['result'], "DELETE FROM $table WHERE $condition");
-        $message = "Registro eliminado correctamente.";
-        return array('success' => true, 'message' => $message);
-      }
-      $query = pg_query($conection['result'], "DELETE FROM $table");
-      $message = "Registro eliminado correctamente.";
-      return array('success' => true, 'message' => $message);
-    } catch (\Exception $e) {
-        $message = "Error al eliminar el registro: " . $e.getMessage;
-    }
-    return array('success' => false, 'message' => $message);
+    if($condition) //Eliminar un registro a partir de una condición
+      return get_response($conection['result'], "DELETE FROM $table WHERE $condition", "DELETE");
+    //Eliminar todos los registros de una tabla
+    return get_response($conection['result'], "DELETE FROM $table", "DELETE");
   }
   return $conection;
 }
