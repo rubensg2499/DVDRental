@@ -35,11 +35,25 @@ if($response['success']){
   echo $response['message'];
 }
 */
+/*
 $response = @delete($conection, "actor", "actor_id IN (206, 207)");
 if($response['success']){
   print_r($response['result']);
   echo $response['message'];
 }else {
   echo $response['message'];
-}
+}*/
+
+/*
+$response = @update(
+  $conection, "actor",
+  array('first_name' => 'Ernesto', 'last_name' => 'Alonso'),
+  "actor_id = 201"
+);
+if($response['success']){
+  print_r($response['result']);
+  echo $response['message'];
+}else {
+  echo $response['message'];
+}*/
 ?>

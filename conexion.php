@@ -108,7 +108,6 @@ function update(
   $columns_values,
   $condition = false
 ){
-  $message = "Error al actualizar el registro.";
   $cols_vals = "";
   foreach ($columns_values as $column => $value) {
     $cols_vals .= $column . " = ";
@@ -117,19 +116,10 @@ function update(
   $cols_vals = substr($cols_vals,0,-2);
 
   if($conection['success']){
-    try {
-      if ($condition) {
-        $query = pg_query($conection['result'], "UPDATE $table SET $cols_vals WHERE $condition");
-        $message = "Registro actualizado correctamente.";
-        return array('success' => true, 'message' => $message);
-      }
-      $query = pg_query($conection['result'], "UPDATE $table SET $cols_vals");
-      $message = "Registro actualizado correctamente.";
-      return array('success' => true, 'message' => $message);
-    } catch (\Exception $e) {
-      $message = "Error al actualizar el registro: " . $e.getMessage;
-    }
-    return array('success' => false, 'message' => $message);
+    if($condition) //actualizar un registro con una condición.
+      return get_response($conection['result'], "UPDATE $table SET $cols_vals WHERE $condition", "UPDATE");
+    //actualizar todos los registros de una tabla.
+    return get_response($conection['result'], "UPDATE $table SET $cols_vals", "UPDATE");
   }
   return $conection;
 }
