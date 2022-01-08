@@ -2,11 +2,27 @@
 <?php
 require_once("conexion.php");
 require_once("constantes.php");
+session_start();
 $conection = @get_conection();
 
 if($conection['success']){
-  //Haga el código.
-  echo $conection['message'];
+  if(!isset($_POST)){
+    $user =  $_POST['user'];
+    $password = $_POST['password'];
+
+    $acceso = select_from(
+      $conection, 'staff',
+      $columns = array('staff_id'),
+      $condition = "username = '$user' AND password = '$password'"
+    );
+
+    if($acceso['success'] && !empty($acceso['result'])){
+      $_SESSION['staff_id'] = $acceso['result'][0]['staff_id'];
+      header('Location: page_menu.php');
+    }else {
+      echo "Error no existe el usuario o la contraseña";
+    }
+  }
 }else {
   echo $conection['message'];
 }
@@ -61,9 +77,32 @@ if($response['success']){
 <html lang="es" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/estilos.login.css">
+    <title>Login</title>
   </head>
   <body>
-
+    <div class="container">
+      <div class="m-0 vh-100 row justify-content-center align-items-center">
+        <div class="col-md-4 text-center login-form-1">
+            <h3>Login DVD Rental</h3>
+            <br>
+            <form action="index.php" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Usuario" name="user" />
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Contraseña" name="password" />
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="submit" class="btnSubmit" value="Login" />
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
   </body>
+  <script src="js/bootstrap.min.js" charset="utf-8"></script>
 </html>

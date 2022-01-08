@@ -55,9 +55,9 @@ function select_from(
       if($columns){
         $columns = get_columns($columns);
         if($condition) //Cuando hay columnas y condición.
-          return get_response($conection['result'], "SELECT $cols FROM $table WHERE $condition", "SELECT");
+          return get_response($conection['result'], "SELECT $columns FROM $table WHERE $condition", "SELECT");
         //Cuando solo hay columnas.
-        return get_response($conection['result'], "SELECT $cols FROM $table", "SELECT");
+        return get_response($conection['result'], "SELECT $columns FROM $table", "SELECT");
       }
       if($condition) //Hay condición, pero no columnas
         return get_response($conection['result'], "SELECT * FROM $table WHERE $condition", "SELECT");
@@ -122,5 +122,21 @@ function update(
     return get_response($conection['result'], "UPDATE $table SET $cols_vals", "UPDATE");
   }
   return $conection;
+}
+
+function execute_procedure(
+  $conection,
+  $procedure,
+  $params = false
+){
+
+}
+
+function execute_function(
+  $conection,
+  $function,
+  $params = false
+){
+  // code...
 }
 ?>
