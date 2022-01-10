@@ -3,19 +3,18 @@
 require_once("conexion.php");
 require_once("constantes.php");
 session_start();
+
 $conection = @get_conection();
 
 if($conection['success']){
-  if(!isset($_POST)){
+  if(isset($_POST['submit']) && !empty($_POST['user']) && !empty($_POST['password'])){
     $user =  $_POST['user'];
     $password = $_POST['password'];
-
     $acceso = select_from(
       $conection, 'staff',
       $columns = array('staff_id'),
       $condition = "username = '$user' AND password = '$password'"
     );
-
     if($acceso['success'] && !empty($acceso['result'])){
       $_SESSION['staff_id'] = $acceso['result'][0]['staff_id'];
       header('Location: page_menu.php');
@@ -26,6 +25,13 @@ if($conection['success']){
 }else {
   echo $conection['message'];
 }
+/*
+$func_result = @execute_procedure(
+  $conection, "delete_actor",
+  $params = array(209,564)
+);
+var_dump($func_result);
+*/
 /*
 $actores = @select_from(
   $conection, "actor",
@@ -97,7 +103,7 @@ if($response['success']){
                 </div>
                 <br>
                 <div class="form-group">
-                    <input type="submit" class="btnSubmit" value="Login" />
+                    <input type="submit" name="submit" class="btnSubmit" value="Login" />
                 </div>
             </form>
         </div>

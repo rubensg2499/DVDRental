@@ -25,7 +25,9 @@ function get_response($conection, $query, $type){
     'SELECT' => "Registro obtenido de manera exitosa.",
     'INSERT' => "Registro guardado de manera exitosa.",
     'DELETE' => "Registro eliminado de manera exitosa.",
-    'UPDATE' => "Registro actualizado de manera exitosa."
+    'UPDATE' => "Registro actualizado de manera exitosa.",
+    'FUNCTION' => "Función ejecutada de manera exitosa.",
+    'PROCEDURE' => "Procedimiento ejecutado de manera existosa."
   );
   $q = pg_query($conection, $query);
   if($q){
@@ -102,6 +104,7 @@ function delete(
   return $conection;
 }
 
+//Funcion para actualizar datos de la base de datos.
 function update(
   $conection,
   $table,
@@ -123,20 +126,41 @@ function update(
   }
   return $conection;
 }
-
+//Funcion para ejecutar un procedimiento de la base de datos.
 function execute_procedure(
   $conection,
   $procedure,
   $params = false
 ){
-
+  if($conection['success']){
+    if($params){
+      $p = '';
+      foreach ($params as $param)
+        $p .= (gettype($param)=='string' || gettype($param)=='boolean')? "'" . $param . "', " : $param . ", ";
+      $p = substr($p, 0, -2);
+      return get_response($conection['result'], "CALL $procedure($p)", "PROCEDURE");
+    }
+    return get_response($conection['result'], "CALL $procedure()", "PROCEDURE");
+  }
+  return $conection;
 }
 
+//Funcion para ejecutar una función de la base de datos.
 function execute_function(
   $conection,
   $function,
   $params = false
 ){
-  // code...
+  if($conection['success']){
+    if($params){
+      $p = '';
+      foreach ($params as $param)
+        $p .= (gettype($param)=='string' || gettype($param)=='boolean')? "'" . $param . "', " : $param . ", ";
+      $p = substr($p, 0, -2);
+      return get_response($conection['result'], "SELECT $function($p)", "FUNCTION");
+    }
+    return get_response($conection['result'], "SELECT $function()", "FUNCTION");
+  }
+  return $conection;
 }
 ?>
