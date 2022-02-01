@@ -11,43 +11,79 @@ if(!isset($_SESSION['staff_id'])){
     <meta charset="utf-8">
     <title>Menú DVDRental</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/estilos.menu.css">
   </head>
-  <body>
-    <header>
-      <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-              </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-          </div>
-        </nav>
-      </div>
-    </header>
+  <body>
     <div class="container">
-    <div class="row">
-      <div class="col">Column</div>
-      <div class="col">Column</div>
-      <div class="w-100"></div>
-      <div class="col">Column</div>
-      <div class="col">Column</div>
+      <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="#">DVDRental</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="peliculas_show.php">Películas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="clientes_show.php">Clientes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="categorias_show.php">Categorías</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <a class="btn btn-outline-danger" href="salir.php">Salir</a>
+        </form>
+      </div>
+    </nav>
+    <!--Cuerpo del documento Imágenes de peliculas-->
+      <div class="row" style="padding:10px">
+        <div class="col">
+          <img src="assets/images/1.jpg" alt="" class="rounded mx-auto d-block">
+        </div>
+        <div class="col">
+          <img src="assets/images/2.jpg" alt="" class="rounded mx-auto d-block">
+        </div>
+        <div class="col">
+          <img src="assets/images/3.jpg" alt="" class="rounded mx-auto d-block">
+        </div>
+      </div>
+      <div class="row" style="padding:10px">
+        <div class="col">
+          <img src="assets/images/4.jpg" alt="" class="rounded mx-auto d-block">
+        </div>
+        <div class="col">
+          <img src="assets/images/5.jpg" alt="" class="rounded mx-auto d-block">
+        </div>
+        <div class="col">
+          <img src="assets/images/6.jpg" alt="" class="rounded mx-auto d-block">
+        </div>
+      </div>
+      <div class="row" style="padding:10px">
+        <div class="col">
+          <img src="assets/images/7.jpg" alt="" class="rounded mx-auto d-block">
+        </div>
+        <div class="col">
+          <img src="assets/images/8.jpg" alt="" class="rounded mx-auto d-block">
+        </div>
+        <div class="col">
+          <img src="assets/images/9.jpg" alt="" class="rounded mx-auto d-block">
+        </div>
+      </div>
+      <div class="row" style="padding:10px">
+        <div class="col">
+          <img src="assets/images/10.jpg" alt="" class="rounded mx-auto d-block">
+        </div>
+        <div class="col">
+          <img src="assets/images/11.jpg" alt="" class="rounded mx-auto d-block">
+        </div>
+        <div class="col">
+          <img src="assets/images/12.jpg" alt="" class="rounded mx-auto d-block">
+        </div>
+      </div>
     </div>
-  </div>
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
