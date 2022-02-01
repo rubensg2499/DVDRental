@@ -40,5 +40,14 @@ if(!isset($_SESSION['staff_id'])){
         </nav>
       </div>
     </header>
+    <div class="container">
+    <div class="row">
+      <div class="col">Column</div>
+      <div class="col">Column</div>
+      <div class="w-100"></div>
+      <div class="col">Column</div>
+      <div class="col">Column</div>
+    </div>
+  </div>
   </body>
 </html>
