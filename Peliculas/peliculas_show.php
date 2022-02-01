@@ -1,7 +1,7 @@
 
 <?php
-require_once("conexion.php");
-require_once("constantes.php");
+require_once("../conexion.php");
+require_once("../constantes.php");
 session_start();
 if(!isset($_SESSION['staff_id'])){
   header('Location: index.php');
@@ -23,8 +23,8 @@ $peliculas = @select_from(
   <head>
     <meta charset="utf-8">
     <title>Menú DVDRental</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/estilos.menu.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilos.menu.css">
   </head>
 
   <body>
@@ -74,14 +74,21 @@ $peliculas = @select_from(
               echo '<td>'.$pelicula['rating'].'</td>';
               echo '<td>';
                 echo '<a href="#" class="btn btn-outline-primary" style="margin-right:5px">Ver</a>';
-                echo '<a href="#" class="btn btn-outline-success" style="margin-right:5px">Editar</a>';
-                echo '<a href="#" class="btn btn-outline-danger" style="margin-right:5px">Eliminar</a>';
+                echo '<a href="peliculas_update.php?id='.$pelicula['film_id'].'" class="btn btn-outline-success" style="margin-right:5px">Editar</a>';
+                echo '<a href="#" onclick="eliminar('.$pelicula['film_id'].')" class="btn btn-outline-danger" style="margin-right:5px">Eliminar</a>';
               echo '</td>';
             echo '</tr>';
           }
          ?>
       </tbody>
     </table>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      function eliminar(id){
+        if(confirm("¿Estás seguro de querer eliminar este registro?")){
+          window.location.href = "peliculas_delete.php?id="+id;
+        }
+      }
+    </script>
   </body>
 </html>

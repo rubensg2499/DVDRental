@@ -1,5 +1,5 @@
 <?php
-require_once("conexion.php");
+require_once("../conexion.php");
 $conection = @get_conection();
 if ($conection['success']) {
   $idiomas = @select_from(
@@ -42,7 +42,7 @@ if ($conection['success']) {
   <head>
     <meta charset="utf-8">
     <title>Agregar nueva película</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
   </head>
   <body>
     <div class="container" style="max-width: 500px">
@@ -51,6 +51,6 @@ if ($conection['success']) {
       </div>
       <?php include("peliculas_formulario.php") ?>
     </div>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
   </body>
 </html>
