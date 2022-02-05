@@ -24,13 +24,13 @@ if(!isset($_SESSION['staff_id'])){
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="peliculas_show.php">Películas</a>
+            <a class="nav-link" href="Peliculas/peliculas_show.php">Películas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="clientes_show.php">Clientes</a>
+            <a class="nav-link" href="Cliente/clientes_show.php">Clientes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="categorias_show.php">Categorías</a>
+            <a class="nav-link" href="Categorias/categorias_show.php">Categorías</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
