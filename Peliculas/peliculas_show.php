@@ -37,7 +37,7 @@ $peliculas = @select_from(
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link btn btn-info" style="color:white" href="peliculas_show.php">Películas</a>
+            <a class="nav-link btn btn-primary" style="color:white" href="peliculas_show.php">Películas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../Clientes/clientes_show.php">Clientes</a>

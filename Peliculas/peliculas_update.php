@@ -132,11 +132,11 @@ if ($conection['success']) {
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <input type="submit" class="form-control btn btn-success" name="submit" value="Guardar">
+              <input type="submit" class="form-control btn btn-outline-success" name="submit" value="Guardar">
             </div>
           </div>
           <div class="col-md-6">
-            <a href="peliculas_show.php" class="form-control btn btn-danger">Cancelar</a>
+            <a href="peliculas_show.php" class="form-control btn btn-outline-danger">Cancelar</a>
           </div>
         </div>
         <br>
