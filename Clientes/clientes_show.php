@@ -22,7 +22,7 @@ $peliculas = @select_from(
 <html lang="es" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Películas</title>
+    <title>Menú DVDRental</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/estilos.menu.css">
   </head>
@@ -37,10 +37,10 @@ $peliculas = @select_from(
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link btn btn-info" style="color:white" href="peliculas_show.php">Películas</a>
+            <a class="nav-link" href="../Peliculas/peliculas_show.php">Películas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../Clientes/clientes_show.php">Clientes</a>
+            <a class="nav-link btn btn-success" style="color:white" href="clientes_show.php">Clientes</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../Categorias/categorias_show.php">Categorías</a>

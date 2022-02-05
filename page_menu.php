@@ -27,7 +27,7 @@ if(!isset($_SESSION['staff_id'])){
             <a class="nav-link" href="Peliculas/peliculas_show.php">Películas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="Cliente/clientes_show.php">Clientes</a>
+            <a class="nav-link" href="Clientes/clientes_show.php">Clientes</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="Categorias/categorias_show.php">Categorías</a>
