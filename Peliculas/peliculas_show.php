@@ -52,7 +52,7 @@ $peliculas = @select_from(
       </div>
     </nav>
     <!--Cuerpo del documento Lista de peliculas-->
-    <a href="peliculas_create.php" class="btn btn-outline-success">Agregar nueva película</a>
+    <a href="peliculas_create.php?action=create" class="btn btn-outline-success">Agregar nueva película</a>
 
     <table class="table table-hover">
       <thead>
@@ -73,8 +73,8 @@ $peliculas = @select_from(
               echo '<td>'.$pelicula['release_year'].'</td>';
               echo '<td>'.$pelicula['rating'].'</td>';
               echo '<td>';
-                echo '<a href="#" class="btn btn-outline-primary" style="margin-right:5px">Ver</a>';
-                echo '<a href="peliculas_update.php?id='.$pelicula['film_id'].'" class="btn btn-outline-success" style="margin-right:5px">Editar</a>';
+                //echo '<a href="#" class="btn btn-outline-primary" style="margin-right:5px">Ver</a>';
+                echo '<a href="peliculas_update.php?id='.$pelicula['film_id'].'&action=update" class="btn btn-outline-success" style="margin-right:5px">Editar</a>';
                 echo '<a href="#" onclick="eliminar('.$pelicula['film_id'].')" class="btn btn-outline-danger" style="margin-right:5px">Eliminar</a>';
               echo '</td>';
             echo '</tr>';
