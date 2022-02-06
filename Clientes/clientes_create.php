@@ -14,26 +14,24 @@ if ($conection['success']) {
   );
   $edit = false;
   //Al guardar
-  if(isset($_POST['submit']) && !empty($_POST['titulo']) &&
-    !empty($_POST['idioma']) && !empty($_POST['duracion_renta']) &&
-    !empty($_POST['precio_renta'] && !empty($_POST['costo_remplazo']))
+  if(isset($_POST['submit']) && !empty($_POST['nombre']) &&
+    !empty($_POST['apellidos']) && !empty($_POST['direccion']) &&
+    !empty($_POST['tienda'])
   ){
-    $pelicula = array(
-      'title' => $_POST['titulo'],
-      'description' => $_POST['descripcion'],
-      'release_year' => (int)$_POST['anyo'],
-      'language_id' => $_POST['idioma'],
-      'rental_duration' => (int)$_POST['duracion_renta'],
-      'rental_rate' => (float)$_POST['precio_renta'],
-      'replacement_cost' => (float)$_POST['costo_remplazo'],
-      'rating' => $_POST['clasificacion']
+    $cliente = array(
+      'first_name' => $_POST['nombre'],
+      'last_name' => $_POST['apellidos'],
+      'address_id' => (int)$_POST['direccion'],
+      'store_id' => (int)$_POST['tienda'],
+      'email' => $_POST['correo'],
+      'activebool' => isset($_POST['activo']) ? 'true' : 'false'
     );
 
     $response = insert(
-      $conection, "film", $pelicula
+      $conection, "customer", $cliente
     );
     if($response['success']){
-      header('Location:peliculas_show.php');
+      header('Location:clientes_show.php');
     }else {
       echo '<div class="alert alert-danger" role="alert">';
       echo $response['message'];
@@ -67,7 +65,7 @@ if ($conection['success']) {
         </div>
         <div class="form-group">
           <label for="correo">Correo electrónico</label>
-          <input type="email" class="form-control" name="email" id="email" placeholder="Ej. email@domail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+          <input type="email" class="form-control" name="correo" id="correo" placeholder="Ej. email@domail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
         </div>
         <div class="form-group">
             <label for="direccion">Dirección<span style="color:red">*</span></label>
@@ -90,7 +88,6 @@ if ($conection['success']) {
           <label for="activo">¿El cliente está activo?<span style="color:red">*</span></label>
           <input class="form-check-input" type="checkbox" name="activo" id="activo">
         </div>
-
         <br>
         <div class="row">
           <div class="col-md-6">
