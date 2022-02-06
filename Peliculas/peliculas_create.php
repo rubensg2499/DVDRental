@@ -44,6 +44,7 @@ if ($conection['success']) {
     <meta charset="utf-8">
     <title>Agregar nueva película</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/master.css">
   </head>
   <body>
     <div class="container" style="max-width: 500px">
@@ -61,16 +62,14 @@ if ($conection['success']) {
         </div>
         <div class="form-group">
           <label for="anyo">Año de estreno<span style="color:red">*</span></label>
-          <input type="number" class="form-control" name="anyo" id="anyo" min="1800" max="3000" placeholder="Ej. 2015" required>
+          <input type="number" class="form-control" name="anyo" id="anyo" min="1901" max="2155" placeholder="Ej. 2015" required>
         </div>
         <div class="form-group">
             <label for="idioma">Idioma<span style="color:red">*</span></label>
             <select name="idioma" id="idioma" class="form-control" required>
-              <?php
-              foreach ($idiomas['result'] as $idioma) {
-                  echo '<option value="'.$idioma['language_id'].'">'.$idioma['name'].'</option>';
-              }
-               ?>
+              <?php foreach ($idiomas['result'] as $idioma): ?>
+                <option value="<?php echo $idioma['language_id']; ?>"><?php echo $idioma['name']; ?></option>
+              <?php endforeach; ?>
             </select>
         </div>
         <div class="form-group">

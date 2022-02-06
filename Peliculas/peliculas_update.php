@@ -71,6 +71,7 @@ if ($conection['success']) {
     <meta charset="utf-8">
     <title>Editar película</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/master.css">
   </head>
   <body>
     <div class="container" style="max-width: 500px">

@@ -25,6 +25,7 @@ $clientes = @select_from(
     <title>Clientes</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/estilos.menu.css">
+    <link rel="stylesheet" href="../css/master.css">
   </head>
 
   <body>

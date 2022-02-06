@@ -85,6 +85,7 @@ if($response['success']){
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilos.login.css">
+    <link rel="stylesheet" href="css/master.css">
     <title>Login</title>
   </head>
   <body>
