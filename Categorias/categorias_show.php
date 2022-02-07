@@ -12,7 +12,7 @@ $conection = @get_conection();
 $categorias = @select_from(
   $conection, "category",
   $columns = array('category_id','name', 'last_update'),
-  $condition = "category_id > 0 ORDER BY category_id ASC"
+  $condition = "category_id > 0 ORDER BY last_update DESC"
 );
 
 //var_dump($categorias);
@@ -69,7 +69,7 @@ $categorias = @select_from(
           <tr>
             <th scope="row">CAT-<?php echo $categoria['category_id']; ?></th>
             <td><?php echo $categoria['name']; ?></td>
-            <td><?php echo $categoria['last_update']; ?></td>
+            <td><?php echo preg_split("/[\ ]/",$categoria['last_update'])[0]; ?></td>
             <td>
               <a href="categorias_update.php?id=<?php echo $categoria['category_id']; ?>&action=update" class="btn btn-outline-success" style="margin-right:5px">Editar</a>
               <a href="#" onclick="eliminar(<?php echo $categoria['category_id']; ?>)" class="btn btn-outline-danger" style="margin-right:5px">Eliminar</a>
