@@ -12,6 +12,7 @@ if(!isset($_SESSION['staff_id'])){
     <title>Menú DVDRental</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilos.menu.css">
+    <link rel="stylesheet" href="css/master.css">
   </head>
 
   <body>

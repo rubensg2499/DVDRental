@@ -9,20 +9,20 @@ if(!isset($_SESSION['staff_id'])){
 
 $conection = @get_conection();
 
-$peliculas = @select_from(
-  $conection, "film",
-  $columns = array('film_id','title', 'description','release_year','rating'),
-  $condition = "film_id > 0 ORDER BY last_update DESC"
+$clientes = @select_from(
+  $conection, "customer",
+  $columns = array('customer_id','store_id', 'first_name','last_name','email','address_id','activebool'),
+  $condition = "customer_id > 0 ORDER BY last_update DESC"
 );
 
-//var_dump($peliculas);
+//var_dump($clientes);
 ?>
 
 <!DOCTYPE html>
 <html lang="es" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Películas</title>
+    <title>Categorías</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/estilos.menu.css">
     <link rel="stylesheet" href="../css/master.css">
@@ -38,13 +38,13 @@ $peliculas = @select_from(
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link btn btn-primary" style="color:white" href="peliculas_show.php">Películas</a>
+            <a class="nav-link" href="../Peliculas/peliculas_show.php">Películas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../Clientes/clientes_show.php">Clientes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../Categorias/categorias_show.php">Categorías</a>
+            <a class="nav-link btn btn-primary" style="color:white" href="#">Categorías</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -52,31 +52,40 @@ $peliculas = @select_from(
         </form>
       </div>
     </nav>
-    <!--Cuerpo del documento Lista de peliculas-->
-    <a href="peliculas_create.php?action=create" class="btn btn-outline-success">Agregar nueva película</a>
+    <!--Cuerpo del documento Lista de clientes-->
+    <a href="clientes_create.php?action=create" class="btn btn-outline-success">Agregar nuevo cliente</a>
 
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">Título</th>
-          <th scope="col">Descripción</th>
-          <th scope="col">Año</th>
-          <th scope="col">Clasificación</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apelidos</th>
+          <th scope="col">Correo electrónico</th>
+          <th scope="col">Id tienda</th>
+          <th scope="col">Activo</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <?php
-          foreach ($peliculas['result'] as $pelicula) {
+          foreach ($clientes['result'] as $cliente) {
             echo '<tr>';
-              echo '<th scope="row">'.$pelicula['title'].'</th>';
-              echo '<td style="width:490px">'.$pelicula['description'].'</td>';
-              echo '<td>'.$pelicula['release_year'].'</td>';
-              echo '<td>'.$pelicula['rating'].'</td>';
+              echo '<th scope="row">'.$cliente['first_name'].'</th>';
+              echo '<td>'.$cliente['last_name'].'</td>';
+              echo '<td>'.$cliente['email'].'</td>';
+              echo '<td>'.$cliente['store_id'].'</td>';
+              echo '<td>';
+                echo '<div class="form-check form-switch">';
+                if($cliente['activebool']=='t')
+                  echo '<input class="form-check-input" type="checkbox" checked disabled>';
+                else
+                  echo '<input class="form-check-input" type="checkbox" disabled>';
+                echo '</div>';
+              echo '</td>';
               echo '<td>';
                 //echo '<a href="#" class="btn btn-outline-primary" style="margin-right:5px">Ver</a>';
-                echo '<a href="peliculas_update.php?id='.$pelicula['film_id'].'&action=update" class="btn btn-outline-success" style="margin-right:5px">Editar</a>';
-                echo '<a href="#" onclick="eliminar('.$pelicula['film_id'].')" class="btn btn-outline-danger" style="margin-right:5px">Eliminar</a>';
+                echo '<a href="clientes_update.php?id='.$cliente['customer_id'].'&action=update" class="btn btn-outline-success" style="margin-right:5px">Editar</a>';
+                echo '<a href="#" onclick="eliminar('.$cliente['customer_id'].')" class="btn btn-outline-danger" style="margin-right:5px">Eliminar</a>';
               echo '</td>';
             echo '</tr>';
           }
@@ -87,7 +96,7 @@ $peliculas = @select_from(
     <script type="text/javascript">
       function eliminar(id){
         if(confirm("¿Estás seguro de querer eliminar este registro?")){
-          window.location.href = "peliculas_delete.php?id="+id;
+          window.location.href = "clientes_delete.php?id="+id;
         }
       }
     </script>

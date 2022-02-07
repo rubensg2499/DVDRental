@@ -85,12 +85,13 @@ if($response['success']){
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilos.login.css">
+    <link rel="stylesheet" href="css/master.css">
     <title>Login</title>
   </head>
   <body>
     <div class="container">
       <div class="m-0 vh-100 row justify-content-center align-items-center">
-        <div class="col-md-4 text-center login-form-1">
+        <div class="col-md-4 text-center login-form-1" style="background-color:white">
             <h3>Login DVD Rental</h3>
             <br>
             <form action="index.php" method="post">
