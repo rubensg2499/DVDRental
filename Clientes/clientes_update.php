@@ -118,7 +118,12 @@ if ($conection['success']) {
         <br>
         <div class="form-group">
           <label for="activo">¿El cliente está activo?<span style="color:red">*</span></label>
-          <input class="form-check-input" type="checkbox" name="activo" id="activo">
+          <?php if ($record['activebool'] == 't'): ?>
+            <input class="form-check-input" type="checkbox" name="activo" id="activo" checked>
+          <?php else: ?>
+            <input class="form-check-input" type="checkbox" name="activo" id="activo">
+          <?php endif; ?>
+
         </div>
         <br>
         <div class="row">

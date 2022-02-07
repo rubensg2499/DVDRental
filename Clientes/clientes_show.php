@@ -41,7 +41,7 @@ $clientes = @select_from(
             <a class="nav-link" href="../Peliculas/peliculas_show.php">Películas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-primary" style="color:white" href="clientes_show.php">Clientes</a>
+            <a class="nav-link btn btn-primary" style="color:white" href="#">Clientes</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../Categorias/categorias_show.php">Categorías</a>
@@ -67,29 +67,25 @@ $clientes = @select_from(
         </tr>
       </thead>
       <tbody>
-        <?php
-          foreach ($clientes['result'] as $cliente) {
-            echo '<tr>';
-              echo '<th scope="row">'.$cliente['first_name'].'</th>';
-              echo '<td>'.$cliente['last_name'].'</td>';
-              echo '<td>'.$cliente['email'].'</td>';
-              echo '<td>'.$cliente['store_id'].'</td>';
-              echo '<td>';
-                echo '<div class="form-check form-switch">';
-                if($cliente['activebool']=='t')
-                  echo '<input class="form-check-input" type="checkbox" checked disabled>';
-                else
-                  echo '<input class="form-check-input" type="checkbox" disabled>';
-                echo '</div>';
-              echo '</td>';
-              echo '<td>';
-                //echo '<a href="#" class="btn btn-outline-primary" style="margin-right:5px">Ver</a>';
-                echo '<a href="clientes_update.php?id='.$cliente['customer_id'].'&action=update" class="btn btn-outline-success" style="margin-right:5px">Editar</a>';
-                echo '<a href="#" onclick="eliminar('.$cliente['customer_id'].')" class="btn btn-outline-danger" style="margin-right:5px">Eliminar</a>';
-              echo '</td>';
-            echo '</tr>';
-          }
-         ?>
+        <?php foreach ($clientes['result'] as $cliente): ?>
+          <tr>
+            <th scope="row"><?php echo $cliente['first_name']; ?></th>
+            <td><?php echo $cliente['last_name']; ?></td>
+            <td><?php echo $cliente['email']; ?></td>
+            <td><?php echo $cliente['store_id']; ?></td>
+            <td>
+              <?php if ($cliente['activebool'] == 't'): ?>
+                <input class="form-check-input" type="checkbox" checked disabled>
+              <?php else: ?>
+                <input class="form-check-input" type="checkbox" disabled>
+              <?php endif; ?>
+            </td>
+            <td>
+              <a href="clientes_update.php?id=<?php echo $cliente['customer_id']; ?>&action=update" class="btn btn-outline-success" style="margin-right:5px">Editar</a>
+              <a href="#" onclick="eliminar(<?php echo $cliente['customer_id']; ?>)" class="btn btn-outline-danger" style="margin-right:5px">Eliminar</a>
+            </td>
+          </tr>
+        <?php endforeach; ?>
       </tbody>
     </table>
     <script src="../js/bootstrap.min.js"></script>
