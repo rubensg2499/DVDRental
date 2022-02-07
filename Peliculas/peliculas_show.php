@@ -4,7 +4,7 @@ require_once("../conexion.php");
 require_once("../constantes.php");
 session_start();
 if(!isset($_SESSION['staff_id'])){
-  header('Location: index.php');
+  header('Location:../index.php');
 }
 
 $conection = @get_conection();
@@ -48,12 +48,12 @@ $peliculas = @select_from(
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-          <a class="btn btn-outline-danger" href="salir.php">Salir</a>
+          <a class="btn btn-outline-danger" href="../salir.php">Salir</a>
         </form>
       </div>
     </nav>
     <!--Cuerpo del documento Lista de peliculas-->
-    <a href="categorias_create.php?action=create" class="btn btn-outline-success">Agregar nueva Categoría</a>
+    <a href="peliculas_create.php?action=create" class="btn btn-outline-success">Agregar nueva Categoría</a>
 
     <table class="table table-hover">
       <thead>
