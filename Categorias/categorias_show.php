@@ -67,7 +67,7 @@ $categorias = @select_from(
       <tbody>
         <?php foreach ($categorias['result'] as $categoria): ?>
           <tr>
-            <th scope="row">CAT-<?php echo $categoria['category_id']; ?></th>
+            <th scope="row"><?php echo $categoria['category_id']; ?></th>
             <td><?php echo $categoria['name']; ?></td>
             <td><?php echo preg_split("/[\ ]/",$categoria['last_update'])[0]; ?></td>
             <td>
