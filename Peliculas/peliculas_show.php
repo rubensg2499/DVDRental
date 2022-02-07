@@ -38,7 +38,7 @@ $peliculas = @select_from(
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link btn btn-primary" style="color:white" href="peliculas_show.php">Películas</a>
+            <a class="nav-link btn btn-primary" style="color:white" href="#">Películas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../Clientes/clientes_show.php">Clientes</a>
@@ -53,7 +53,7 @@ $peliculas = @select_from(
       </div>
     </nav>
     <!--Cuerpo del documento Lista de peliculas-->
-    <a href="peliculas_create.php?action=create" class="btn btn-outline-success">Agregar nueva película</a>
+    <a href="categorias_create.php?action=create" class="btn btn-outline-success">Agregar nueva Categoría</a>
 
     <table class="table table-hover">
       <thead>
@@ -66,21 +66,18 @@ $peliculas = @select_from(
         </tr>
       </thead>
       <tbody>
-        <?php
-          foreach ($peliculas['result'] as $pelicula) {
-            echo '<tr>';
-              echo '<th scope="row">'.$pelicula['title'].'</th>';
-              echo '<td style="width:490px">'.$pelicula['description'].'</td>';
-              echo '<td>'.$pelicula['release_year'].'</td>';
-              echo '<td>'.$pelicula['rating'].'</td>';
-              echo '<td>';
-                //echo '<a href="#" class="btn btn-outline-primary" style="margin-right:5px">Ver</a>';
-                echo '<a href="peliculas_update.php?id='.$pelicula['film_id'].'&action=update" class="btn btn-outline-success" style="margin-right:5px">Editar</a>';
-                echo '<a href="#" onclick="eliminar('.$pelicula['film_id'].')" class="btn btn-outline-danger" style="margin-right:5px">Eliminar</a>';
-              echo '</td>';
-            echo '</tr>';
-          }
-         ?>
+        <?php foreach ($peliculas['result'] as $pelicula): ?>
+          <tr>
+            <th scope="row"><?php echo $pelicula['title']; ?></th>
+            <td style="max-width:490px"><?php echo $pelicula['description']; ?></td>
+            <td><?php echo $pelicula['release_year']; ?></td>
+            <td><?php echo $pelicula['rating']; ?></td>
+            <td>
+              <a href="peliculas_update.php?id=<?php echo $pelicula['film_id']; ?>&action=update" class="btn btn-outline-success" style="margin-right:5px">Editar</a>
+              <a href="#" onclick="eliminar(<?php echo $pelicula['film_id']; ?>)" class="btn btn-outline-danger" style="margin-right:5px">Eliminar</a>
+            </td>
+          </tr>
+        <?php endforeach; ?>
       </tbody>
     </table>
     <script src="../js/bootstrap.min.js"></script>

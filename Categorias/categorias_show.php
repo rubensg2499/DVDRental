@@ -9,13 +9,13 @@ if(!isset($_SESSION['staff_id'])){
 
 $conection = @get_conection();
 
-$clientes = @select_from(
-  $conection, "customer",
-  $columns = array('customer_id','store_id', 'first_name','last_name','email','address_id','activebool'),
-  $condition = "customer_id > 0 ORDER BY last_update DESC"
+$categorias = @select_from(
+  $conection, "category",
+  $columns = array('category_id','name', 'last_update'),
+  $condition = "category_id > 0 ORDER BY category_id ASC"
 );
 
-//var_dump($clientes);
+//var_dump($categorias);
 ?>
 
 <!DOCTYPE html>
@@ -53,50 +53,36 @@ $clientes = @select_from(
       </div>
     </nav>
     <!--Cuerpo del documento Lista de clientes-->
-    <a href="clientes_create.php?action=create" class="btn btn-outline-success">Agregar nuevo cliente</a>
+    <a href="categorias_create.php?action=create" class="btn btn-outline-success">Agregar nueva categoría</a>
 
     <table class="table table-hover">
       <thead>
         <tr>
+          <th scope="col">Id categoría</th>
           <th scope="col">Nombre</th>
-          <th scope="col">Apelidos</th>
-          <th scope="col">Correo electrónico</th>
-          <th scope="col">Id tienda</th>
-          <th scope="col">Activo</th>
+          <th scope="col">Última actualización</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <?php
-          foreach ($clientes['result'] as $cliente) {
-            echo '<tr>';
-              echo '<th scope="row">'.$cliente['first_name'].'</th>';
-              echo '<td>'.$cliente['last_name'].'</td>';
-              echo '<td>'.$cliente['email'].'</td>';
-              echo '<td>'.$cliente['store_id'].'</td>';
-              echo '<td>';
-                echo '<div class="form-check form-switch">';
-                if($cliente['activebool']=='t')
-                  echo '<input class="form-check-input" type="checkbox" checked disabled>';
-                else
-                  echo '<input class="form-check-input" type="checkbox" disabled>';
-                echo '</div>';
-              echo '</td>';
-              echo '<td>';
-                //echo '<a href="#" class="btn btn-outline-primary" style="margin-right:5px">Ver</a>';
-                echo '<a href="clientes_update.php?id='.$cliente['customer_id'].'&action=update" class="btn btn-outline-success" style="margin-right:5px">Editar</a>';
-                echo '<a href="#" onclick="eliminar('.$cliente['customer_id'].')" class="btn btn-outline-danger" style="margin-right:5px">Eliminar</a>';
-              echo '</td>';
-            echo '</tr>';
-          }
-         ?>
+        <?php foreach ($categorias['result'] as $categoria): ?>
+          <tr>
+            <th scope="row">CAT-<?php echo $categoria['category_id']; ?></th>
+            <td><?php echo $categoria['name']; ?></td>
+            <td><?php echo $categoria['last_update']; ?></td>
+            <td>
+              <a href="categorias_update.php?id=<?php echo $categoria['category_id']; ?>&action=update" class="btn btn-outline-success" style="margin-right:5px">Editar</a>
+              <a href="#" onclick="eliminar(<?php echo $categoria['category_id']; ?>)" class="btn btn-outline-danger" style="margin-right:5px">Eliminar</a>
+            </td>
+          </tr>
+        <?php endforeach; ?>
       </tbody>
     </table>
     <script src="../js/bootstrap.min.js"></script>
     <script type="text/javascript">
       function eliminar(id){
         if(confirm("¿Estás seguro de querer eliminar este registro?")){
-          window.location.href = "clientes_delete.php?id="+id;
+          window.location.href = "categorias_delete.php?id="+id;
         }
       }
     </script>
