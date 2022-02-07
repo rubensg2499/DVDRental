@@ -12,7 +12,31 @@ if ($conection['success']) {
     $columns = array('store_id'),
     $condition = "store_id > 0 ORDER BY store_id"
   );
-  $edit = false;
+  $record = array('success' => false);
+  $id = $_GET['id'];
+
+  if(!empty($_GET['action']) && $_GET['action'] == 'update'){
+    $id = $_GET['id'];
+    $record = @select_from(
+      $conection, "customer",
+      $columns = array(
+        'customer_id',
+        'first_name',
+        'last_name',
+        'address_id',
+        'store_id',
+        'email',
+        'activebool'
+      ),
+      $condition = "customer_id = $id"
+    );
+
+    if(!$record['success'])
+      header("Location: clientes_show.php");
+    else
+      $record = $record['result'][0];
+  }
+
   //Al guardar
   if(isset($_POST['submit']) && !empty($_POST['nombre']) &&
     !empty($_POST['apellidos']) && !empty($_POST['direccion']) &&
@@ -27,8 +51,8 @@ if ($conection['success']) {
       'activebool' => isset($_POST['activo']) ? 'true' : 'false'
     );
 
-    $response = @insert(
-      $conection, "customer", $cliente
+    $response = @update(
+      $conection, "customer", $cliente, $condition="customer_id = $id"
     );
     if($response['success']){
       header('Location:clientes_show.php');
@@ -45,33 +69,37 @@ if ($conection['success']) {
 <html lang="es" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Agregar nuevo cliente</title>
+    <title>Editar cliente</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/master.css">
   </head>
   <body>
     <div class="container" style="max-width: 500px">
       <div class="">
-        <h3 class="text-align-center">Agregar nuevo cliente</h2>
+        <h3 class="text-align-center">Editar cliente</h2>
       </div>
       <form method="POST" action="">
         <div class="form-group">
           <label for="nombre">Nombre<span style="color:red">*</span></label>
-          <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej. Rubén" pattern="^[A-Za-záéíóúÁÉÍÓÚ ]+$" required>
+          <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej. Rubén" pattern="^[A-Za-záéíóúÁÉÍÓÚ ]+$" value="<?php echo $record['first_name']; ?>"required>
         </div>
         <div class="form-group">
           <label for="apellidos">Apellidos</label>
-          <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Ej. Sánchez González" pattern="^[A-Za-záéíóúÁÉÍÓÚ ]+$" required>
+          <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Ej. Sánchez González" pattern="^[A-Za-záéíóúÁÉÍÓÚ ]+$" value="<?php echo $record['last_name']; ?>" required>
         </div>
         <div class="form-group">
           <label for="correo">Correo electrónico</label>
-          <input type="email" class="form-control" name="correo" id="correo" placeholder="Ej. email@domail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+          <input type="email" class="form-control" name="correo" id="correo" placeholder="Ej. email@domail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="<?php echo $record['email']; ?>">
         </div>
         <div class="form-group">
             <label for="direccion">Dirección<span style="color:red">*</span></label>
             <select name="direccion" id="direccion" class="form-control" required>
               <?php foreach ($direcciones['result'] as $direccion):?>
-                <option value="<?php echo $direccion['address_id']; ?>"><?php echo $direccion['address'].', '.$direccion['district'].', '.$direccion['postal_code']; ?></option>
+                <?php if ($direccion['address_id'] == $record['address_id']): ?>
+                  <option value="<?php echo $direccion['address_id']; ?>" selected><?php echo $direccion['address'].', '.$direccion['district'].', '.$direccion['postal_code']; ?></option>
+                <?php else: ?>
+                  <option value="<?php echo $direccion['address_id']; ?>"><?php echo $direccion['address'].', '.$direccion['district'].', '.$direccion['postal_code']; ?></option>
+                <?php endif; ?>
               <?php endforeach; ?>
             </select>
         </div>
@@ -79,7 +107,11 @@ if ($conection['success']) {
             <label for="tienda">Id tienda<span style="color:red">*</span></label>
             <select name="tienda" id="tienda" class="form-control" required>
               <?php foreach ($tiendas['result'] as $tienda):?>
-                <option value="<?php echo $tienda['store_id']; ?>"><?php echo $tienda['store_id']; ?></option>
+                <?php if ($tienda['store_id'] == $record['store_id']): ?>
+                  <option value="<?php echo $tienda['store_id']; ?>" selected><?php echo $tienda['store_id']; ?></option>
+                <?php else: ?>
+                  <option value="<?php echo $tienda['store_id']; ?>"><?php echo $tienda['store_id']; ?></option>
+                <?php endif; ?>
               <?php endforeach; ?>
             </select>
         </div>

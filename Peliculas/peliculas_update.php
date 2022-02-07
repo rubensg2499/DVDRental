@@ -52,7 +52,7 @@ if ($conection['success']) {
     );
 
     $response = @update(
-      $conection, "film", $pelicula, $condition="film_id=$id"
+      $conection, "film", $pelicula, $condition="film_id = $id"
     );
     if($response['success']){
       header('Location:peliculas_show.php');
@@ -94,14 +94,13 @@ if ($conection['success']) {
         <div class="form-group">
             <label for="idioma">Idioma<span style="color:red">*</span></label>
             <select name="idioma" id="idioma" class="form-control" required>
-              <?php
-              foreach ($idiomas['result'] as $idioma) {
-                  if($idioma['language_id'] == $record['language_id'])
-                    echo '<option value="'.$idioma['language_id'].'" selected>'.$idioma['name'].'</option>';
-                  else
-                    echo '<option value="'.$idioma['language_id'].'">'.$idioma['name'].'</option>';
-              }
-               ?>
+              <?php foreach ($idiomas['result'] as $idioma): ?>
+                <?php if($idioma['language_id'] == $record['language_id']): ?>
+                  <option value="<?php echo $idioma['language_id']; ?>" selected><?php echo $idioma['name']; ?></option>
+                <?php else: ?>
+                  <option value="<?php echo $idioma['language_id']; ?>"><?php echo $idioma['name']; ?></option>
+                <?php endif; ?>
+              <?php endforeach; ?>
             </select>
         </div>
         <div class="form-group">
@@ -119,14 +118,13 @@ if ($conection['success']) {
         <div class="form-group">
             <label for="clasificacion">Clasificación</label>
             <select name="clasificacion" id="clasificacion" class="form-control">
-              <?php
-                foreach ($clasificaciones as $clasificacion) {
-                  if($clasificacion == $record['rating'])
-                    echo '<option value="'.$clasificacion.'" selected>'.$clasificacion.'</option>';
-                  else
-                    echo '<option value="'.$clasificacion.'">'.$clasificacion.'</option>';
-                }
-               ?>
+              <?php foreach ($clasificaciones as $clasificacion): ?>
+                <?php if($clasificacion == $record['rating']): ?>
+                  <option value="<?php echo $clasificacion; ?>" selected><?php echo $clasificacion; ?></option>
+                <?php else: ?>
+                  <option value="<?php echo $clasificacion; ?>"><?php echo $clasificacion; ?></option>
+                <?php endif; ?>
+              <?php endforeach; ?>
             </select>
         </div>
         <br>
