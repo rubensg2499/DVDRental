@@ -53,7 +53,7 @@ $peliculas = @select_from(
       </div>
     </nav>
     <!--Cuerpo del documento Lista de peliculas-->
-    <a href="peliculas_create.php?action=create" class="btn btn-outline-success">Agregar nueva Categoría</a>
+    <a href="peliculas_create.php?action=create" class="btn btn-outline-success">Agregar nueva película</a>
 
     <table class="table table-hover">
       <thead>
